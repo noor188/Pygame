@@ -1,9 +1,24 @@
 import pygame
 
+## Moves a circle around on screen
+
+## =================
+## Constants:
+
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
-clock = pygame.time.Clock()
-running = True
+WIDTH      = 1280
+HEIGHT     = 720 
+screen     = pygame.display.set_mode((WIDTH, HEIGHT))
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+clock      = pygame.time.Clock()
+running    = True
+dt         = 0
+
+## =================
+## Data definitions:
+
+## =================
+## Functions:
 
 while running:
 
@@ -11,11 +26,22 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    screen.fill("red")
+    screen.fill("white")
 
-    # render your game
+    # render your game here
+    pygame.draw.circle(screen, "red", player_pos, 40)
+    
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_DOWN]:
+        player_pos.y += 300 * dt
+    if keys[pygame.K_UP]:
+        player_pos.y -= 300 * dt
+    if keys[pygame.K_RIGHT]:
+        player_pos.x += 300 * dt
+    if keys[pygame.K_LEFT]:
+        player_pos.x -= 300 * dt
 
+    # flip() the display to put your work on screen
     pygame.display.flip()
-
-    clock.tick(60)
+    dt = clock.tick(60) / 1000
 pygame.quit()
